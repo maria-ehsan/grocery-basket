@@ -14,6 +14,7 @@ import com.grocerybasket.release.entity.MasterInformation;
 import com.grocerybasket.release.entity.ProductPrice;
 import com.grocerybasket.release.repository.MasterInformationRepository;
 import com.grocerybasket.release.util.ExcelUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class ProductService {
             List<ProductPrice> productPrices = new ArrayList<>();
             List<Barcodes> barcodes = new ArrayList<>();
 
-            for (ExcelProduct product: excelProducts) {
+            for (ExcelProduct product : excelProducts) {
                 MasterInformation masterInformation = product.toMasterInformation();
                 masterInformations.add(masterInformation);
                 ProductPrice productPrice = product.toProductPrice(masterInformation);
@@ -52,7 +53,7 @@ public class ProductService {
                 barcodes.add(barcode);
             }
 
-            if(masterInformationRepository.count() == 0) {
+            if (masterInformationRepository.count() == 0) {
                 masterInformationRepository.saveAll(masterInformations);
                 productPriceRepository.saveAll(productPrices);
                 barcodeRepository.saveAll(barcodes);
