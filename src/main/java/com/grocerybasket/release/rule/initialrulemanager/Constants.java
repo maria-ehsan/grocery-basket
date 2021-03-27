@@ -1,4 +1,4 @@
-package com.grocerybasket.release.rule;
+package com.grocerybasket.release.rule.initialrulemanager;
 
 
 public class Constants {

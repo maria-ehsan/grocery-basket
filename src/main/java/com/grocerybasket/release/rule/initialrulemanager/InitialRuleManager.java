@@ -1,4 +1,4 @@
-package com.grocerybasket.release.rule;
+package com.grocerybasket.release.rule.initialrulemanager;
 
 import com.grocerybasket.release.models.ExcelProduct;
 import org.jeasy.rules.api.Facts;
@@ -11,26 +11,28 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class RuleManager {
-    private final List<RuleInterface> ruleInterfaces;
+public class InitialRuleManager {
 
-    public RuleManager(
-            List<RuleInterface> ruleInterfaces) {
-        this.ruleInterfaces = ruleInterfaces;
+    private final List<InitialRule> rules;
+
+    public InitialRuleManager(
+            List<InitialRule> rules) {
+        this.rules = rules;
     }
 
     public void run(List<ExcelProduct> excelProducts) {
-        Facts facts = new Facts();
-        facts.put("product-list", excelProducts);
+
 
         ActivationRuleGroup activationRuleGroup = new ActivationRuleGroup();
-        ruleInterfaces.forEach(activationRuleGroup::addRule);
+        rules.forEach(activationRuleGroup::addRule);
 
         Rules rules = new Rules();
         rules.register(activationRuleGroup);
 
         RulesEngine rulesEngine = new DefaultRulesEngine();
+
+        Facts facts = new Facts();
+        facts.put("excelProducts", excelProducts);
         rulesEngine.fire(rules, facts);
     }
-
 }
