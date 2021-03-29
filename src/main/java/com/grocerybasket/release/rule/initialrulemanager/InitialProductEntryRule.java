@@ -7,8 +7,6 @@ import com.grocerybasket.release.models.ExcelProduct;
 import com.grocerybasket.release.repository.BarcodeRepository;
 import com.grocerybasket.release.repository.MasterInformationRepository;
 import com.grocerybasket.release.repository.ProductPriceRepository;
-import com.grocerybasket.release.rule.initialrulemanager.Constants;
-import com.grocerybasket.release.rule.ruleManager.Rule;
 import lombok.AllArgsConstructor;
 import org.jeasy.rules.annotation.Action;
 import org.jeasy.rules.annotation.Condition;

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.grocerybasket.release.models.ExcelProduct;
 import com.grocerybasket.release.util.ExcelUtils;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,10 +26,10 @@ public class ProductService {
     private final InitialRuleManager initialRuleManager;
     private MasterInformationRepository masterInformationRepository;
 
-    public void upload() {
+    public void upload(MultipartFile file) {
 
         try {
-            List<ExcelProduct> excelProducts = ExcelUtils.parseExcelFile(new FileInputStream(new File("/Users/salman/Downloads/SampleProductList.xlsx")));
+            List<ExcelProduct> excelProducts = ExcelUtils.parseExcelFile(file.getInputStream());
 
             if(masterInformationRepository.count() > 0)
                 ruleManager.run(excelProducts);
