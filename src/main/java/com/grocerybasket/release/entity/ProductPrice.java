@@ -1,14 +1,11 @@
 package com.grocerybasket.release.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,11 +14,17 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "product_price")
-public class ProductPrice extends BaseEntity{
+public class ProductPrice extends BaseEntity {
+//
+//    @OneToOne(cascade= CascadeType.ALL)
+//    @JoinColumn(name= "MASTER_INFORMATION_PRODUCT_CODE")
+//    private MasterInformation masterInformation;
+//
 
-    @OneToOne(cascade= CascadeType.ALL)
-    @JoinColumn(name= "product_code", referencedColumnName = "product_code")
-    private MasterInformation masterInformation;
+    @OneToOne
+    @JoinColumn(name = "product_code", nullable = false, referencedColumnName = "product_code")
+    public MasterInformation masterInformation;
+
 
     @Column(name = "store_id")
     private String storeId;

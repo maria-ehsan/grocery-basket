@@ -1,5 +1,6 @@
 package com.grocerybasket.release.util;
 
+import com.grocerybasket.release.models.ExcelProduct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -8,7 +9,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.grocerybasket.release.models.ExcelProduct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -47,22 +47,24 @@ public class ExcelUtils {
                 while (cellsInRow.hasNext()) {
                     Cell currentCell = (Cell) cellsInRow.next();
 
-                    if (cellIndex == 0) { // ID
+                    if (cellIndex == Constants.BARCODE) {
                         product.setBarcode(currentCell.getStringCellValue());
-                    } else if (cellIndex == 1) { // Name
+                    } else if (cellIndex == Constants.NAME) {
                         product.setName(currentCell.getStringCellValue());
-                    } else if (cellIndex == 2) { // Name
+                    } else if (cellIndex == Constants.VENDOR) {
                         product.setVendor(currentCell.getStringCellValue());
-                    } else if (cellIndex == 3) { // Address
+                    } else if (cellIndex == Constants.SALE_PRICE) { //
                         product.setSalePrice(currentCell.getNumericCellValue());
-                    } else if (cellIndex == 4) { // Address
+                    } else if (cellIndex == Constants.RETAIL_PRICE) {
                         product.setRetailPrice(currentCell.getNumericCellValue());
-                    } else if (cellIndex == 5) { // Age
+                    } else if (cellIndex == Constants.STATUS) {
                         product.setStatus(currentCell.getStringCellValue());
-                    } else if (cellIndex == 6) { // Age
+                    } else if (cellIndex == Constants.IMAGE) {
                         product.setImageName("abcd");
-                    } else if (cellIndex == 7) { // Age
+                    } else if (cellIndex == Constants.STOCK_QUANTITY) {
                         product.setStockQuantity((int) currentCell.getNumericCellValue());
+                    } else if (cellIndex == Constants.CODE){
+                        product.setCode(currentCell.getStringCellValue());
                     }
 
                     cellIndex++;

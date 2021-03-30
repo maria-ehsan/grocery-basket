@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,10 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -49,37 +46,4 @@ public class MasterInformation extends BaseEntity{
     @JsonManagedReference
     @OneToMany(targetEntity = MasterInformation.class, mappedBy = "parent", fetch = FetchType.LAZY)
     private Set<MasterInformation> childProducts;
-
-    public Boolean getEnabled() {
-        if (enabled == null) {
-            return Boolean.FALSE;
-        }
-        return Boolean.TRUE;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled == null ? Boolean.FALSE : enabled;
-    }
-
-    public String getProductCode() {
-        if (StringUtils.isEmpty(this.productCode)) {
-            return UUID.randomUUID().toString();
-        }
-        return this.productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode == null ? UUID.randomUUID().toString() : productCode;
-    }
-
-    public String getBrand() {
-        if (StringUtils.isEmpty(this.brand)) {
-            return "No Brand";
-        }
-        return this.brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand == null ? "No Brand" : brand;
-    }
 }
