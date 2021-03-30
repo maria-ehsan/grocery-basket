@@ -19,9 +19,8 @@ import javax.persistence.Table;
 @Table(name = "product_price")
 public class ProductPrice extends BaseEntity{
 
-    @JsonBackReference
-    @OneToOne(cascade= CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name= "product_code")
+    @OneToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name= "product_code", referencedColumnName = "product_code")
     private MasterInformation masterInformation;
 
     @Column(name = "store_id")
