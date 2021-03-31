@@ -19,14 +19,14 @@ import java.util.List;
 
 @org.jeasy.rules.annotation.Rule(name = "product_name_exists", description = "", priority = Constants.RulePriority.PRODUCT_NAME_EXISTS)
 @Component
-public class ProductNameExistsRule implements Rule {
+public class ProductNameExists implements Rule {
 
     private PendingProductCloseMatchRepository pendingProductCloseMatchRepository;
     private BarcodeRepository barcodeRepository;
     private MasterInformationRepository masterInformationRepository;
 
     @Autowired
-    public ProductNameExistsRule(PendingProductCloseMatchRepository pendingProductCloseMatchRepository, BarcodeRepository barcodeRepository, MasterInformationRepository masterInformationRepository) {
+    public ProductNameExists(PendingProductCloseMatchRepository pendingProductCloseMatchRepository, BarcodeRepository barcodeRepository, MasterInformationRepository masterInformationRepository) {
         this.pendingProductCloseMatchRepository = pendingProductCloseMatchRepository;
         this.barcodeRepository = barcodeRepository;
         this.masterInformationRepository = masterInformationRepository;
@@ -35,8 +35,8 @@ public class ProductNameExistsRule implements Rule {
     @Condition
     public boolean doesProductNameExist(@Fact("excelProduct") ExcelProduct excelProduct) {
 
-        List<Barcodes> existingBarcodes = barcodeRepository.findAll();
-        if (!doesBarcodeAlreadyExist(excelProduct, existingBarcodes)) {
+        Barcodes existingBarcode = barcodeRepository.findByBarcode(excelProduct.getBarcode());
+        if (!doesBarcodeAlreadyExist(existingBarcode)) {
             List<MasterInformation> masterInformationList = masterInformationRepository.findAll();
             String subProductName = getfirstNWords(excelProduct.getName(), 2);
             for (MasterInformation masterInformation : masterInformationList) {
@@ -48,8 +48,8 @@ public class ProductNameExistsRule implements Rule {
         return false;
     }
 
-    private boolean doesBarcodeAlreadyExist(@Fact("excelProduct") ExcelProduct excelProduct, List<Barcodes> existingBarcodes) {
-        return existingBarcodes.stream().anyMatch(it -> it.getBarcode().equals(excelProduct.getBarcode()));
+    private boolean doesBarcodeAlreadyExist(Barcodes barcodes) {
+        return StringUtils.isNotEmpty(barcodes.getBarcode());
     }
 
     private String getfirstNWords(String input, int numOfWords) {
@@ -60,7 +60,6 @@ public class ProductNameExistsRule implements Rule {
 
     @Action
     public void insertProducts(@Fact("excelProduct") ExcelProduct excelProduct) {
-
         pendingProductCloseMatchRepository.save(excelProduct.toPendingProductsCloseMatch());
     }
 }

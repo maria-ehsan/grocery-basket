@@ -11,4 +11,5 @@ public interface BarcodeRepository extends JpaRepository<Barcodes, Integer>, Jpa
 
     List<Barcodes> findByBarcodeAndAndStoreIdNot(String barcode, String storeId);
     Barcodes findByBarcodeAndAndStoreId(String barcode, String storeId);
+    Barcodes findByBarcode(String barcode);
 }
