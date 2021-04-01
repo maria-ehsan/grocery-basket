@@ -1,6 +1,7 @@
 package com.grocerybasket.release.controller;
 
 import com.grocerybasket.release.Message.Message;
+import com.grocerybasket.release.models.ProductCatalog;
 import com.grocerybasket.release.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,7 +36,23 @@ public class ProductController {
     public Message upload(@RequestParam(value = "file") MultipartFile file) throws FileNotFoundException {
 
         productService.upload(file);
-
         return new Message("", "Not Excel Files", "fail");
     }
+
+//    @GetMapping(value = "/pending")
+//    public List<PendingProducts> getAllPendingProducts(){
+////       return productService.getPendingProducts();
+//    }
+//
+//    @GetMapping(value = "/pending-close-match")
+//    public List<PendingProductsCloseMatch> getAllCloseMatchProducts(){
+////        return productService.getCloseMatchPendingProducts();
+//    }
+
+    @GetMapping(value = "/normal")
+    public List<ProductCatalog> getAllProducts(@RequestParam(required = false) String query){
+        return productService.getProducts(query);
+    }
+
+
 }

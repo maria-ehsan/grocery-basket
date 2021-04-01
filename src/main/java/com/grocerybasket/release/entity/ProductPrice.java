@@ -3,6 +3,7 @@ package com.grocerybasket.release.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,11 +16,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product_price")
 public class ProductPrice extends BaseEntity {
-//
+
 //    @OneToOne(cascade= CascadeType.ALL)
 //    @JoinColumn(name= "MASTER_INFORMATION_PRODUCT_CODE")
 //    private MasterInformation masterInformation;
-//
 
     @OneToOne
     @JoinColumn(name = "product_code", nullable = false, referencedColumnName = "product_code")

@@ -5,7 +5,9 @@ import com.grocerybasket.release.entity.MasterInformation;
 import com.grocerybasket.release.entity.PendingProducts;
 import com.grocerybasket.release.entity.PendingProductsCloseMatch;
 import com.grocerybasket.release.entity.ProductPrice;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.util.StringUtils;
 
@@ -13,6 +15,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ExcelProduct {
 
     private String barcode;
@@ -52,6 +55,7 @@ public class ExcelProduct {
 
         return masterInformation;
     }
+
 
     public Barcodes toBarcodes(MasterInformation masterInformation) {
         Barcodes barcodes = new Barcodes();
